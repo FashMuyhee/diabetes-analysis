@@ -4,6 +4,7 @@ import {Container, NavBar} from '../components';
 import {Button, Text, withTheme, TextInput} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 const Login = ({navigation, theme}) => {
   const {colors} = theme;
   return (
@@ -38,8 +39,10 @@ const Login = ({navigation, theme}) => {
           </Button>
         </View>
         <Button
+          onPress={() => alert('yo')}
           labelStyle={{textTransform: 'capitalize'}}
-          style={{marginTop: hp(10)}}>
+          style={{marginTop: hp(10)}}
+          onPress={() => navigation.navigate('register')}>
           <Text>Create an Account</Text>
         </Button>
       </Container>

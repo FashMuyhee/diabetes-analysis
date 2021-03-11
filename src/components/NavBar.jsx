@@ -24,7 +24,7 @@ const NavBar = ({left, right, center, bgColor, customStyles}) => {
   );
 };
 
-NavBar.prototype = {
+NavBar.propType = {
   left: PropTypes.element,
   center: PropTypes.element,
   right: PropTypes.element,
