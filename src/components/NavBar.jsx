@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 const NavBar = ({left, right, center, bgColor, customStyles}) => {
   return (
     <View
-      style={{
-        ...styles.navbar,
-        ...customStyles,
-        backgroundColor: bgColor ? bgColor : 'white',
-      }}>
+      style={[
+        styles.navbar,
+        customStyles,
+        {backgroundColor: bgColor ? bgColor : '#0A1933'},
+      ]}>
       <View
         style={{...styles.navbarItem, alignItems: 'flex-start', width: '10%'}}>
         {left ? left : null}
@@ -34,13 +34,14 @@ export default NavBar;
 
 const styles = StyleSheet.create({
   navbar: {
-    height: 50,
+    height: '7%',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft: 10,
     paddingRight: 10,
     alignItems: 'center',
+    elevation: 10,
   },
   navbarItem: {
     width: '33.33%',
