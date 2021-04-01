@@ -1,15 +1,28 @@
 import React from 'react';
-import {StyleSheet, StatusBar, View, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  StatusBar,
+  View,
+  ScrollView,
+  ImageBackground,
+  Image,
+  SafeAreaView,
+} from 'react-native';
 import {Container, NavBar} from '../components';
 import {Button, Text, withTheme, TextInput} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import shapeBg from '../assets/images/container_bg.png';
 
-const RunTest = ({navigation}) => {
+const RunTest = ({navigation, theme}) => {
   return (
     <>
-      <StatusBar barStyle="light-content" />
-      <Container style={styles.container}>
+      <StatusBar
+        barStyle="light-content"
+        translucent={false}
+        backgroundColor={theme.colors.primary}
+      />
+      <Container>
         <NavBar
           bgColor="transparent"
           left={
@@ -35,10 +48,12 @@ const RunTest = ({navigation}) => {
             <TextInput label="Pregnancies No (Optional)" style={styles.input} />
             <TextInput label="Pedigree Function" style={styles.input} />
             <TextInput label="Outcome" style={styles.input} />
-
             <Button
               mode="contained"
-              labelStyle={{textTransform: 'capitalize'}}
+              labelStyle={{
+                textTransform: 'capitalize',
+                fontFamily: 'Raleway-Regular',
+              }}
               style={{marginTop: 40, marginBottom: 30}}>
               Analyze
             </Button>
@@ -49,11 +64,12 @@ const RunTest = ({navigation}) => {
   );
 };
 
-export default RunTest;
+export default withTheme(RunTest);
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 0,
+    backgroundColor: 'transparent',
   },
   registerTitle: {
     color: 'white',
@@ -63,19 +79,26 @@ const styles = StyleSheet.create({
   },
   form: {
     backgroundColor: 'white',
-    // height: '100%',
     width: '95%',
     borderRadius: 3,
     alignSelf: 'center',
     marginTop: 20,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#0A1933',
-    marginBottom: 20,
+    paddingBottom: 10,
+    marginBottom: 10,
     padding: 20,
   },
   input: {
     backgroundColor: 'white',
     marginTop: 15,
     marginBottom: 25,
+  },
+  shapeBg: {
+    height: '60%',
+    width: '100%',
+    paddingTop: 30,
+    position: 'relative',
+    zIndex: 12,
   },
 });

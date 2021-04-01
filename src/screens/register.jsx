@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   form: {
     backgroundColor: 'white',
-    height: '80%',
+    height: '68%',
     width: '85%',
     borderRadius: 3,
     alignSelf: 'center',

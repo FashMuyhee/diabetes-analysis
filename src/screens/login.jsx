@@ -6,10 +6,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const Login = ({navigation, theme}) => {
-  const {colors} = theme;
   return (
     <>
-      <StatusBar barStyle="light-content" />
+      <StatusBar
+        barStyle="light-content"
+        translucent={false}
+        backgroundColor={theme.colors.primary}
+      />
       <Container style={styles.container}>
         <NavBar
           bgColor="transparent"
@@ -28,6 +31,7 @@ const Login = ({navigation, theme}) => {
           <TextInput label="Password" style={styles.input} secureTextEntry />
           <Button
             mode="contained"
+            onPress={() => navigation.navigate('dashboard')}
             labelStyle={{textTransform: 'capitalize'}}
             style={{marginTop: 40, marginBottom: 30}}>
             Sign In
@@ -39,11 +43,14 @@ const Login = ({navigation, theme}) => {
           </Button>
         </View>
         <Button
-          onPress={() => alert('yo')}
-          labelStyle={{textTransform: 'capitalize'}}
+          labelStyle={{
+            textTransform: 'capitalize',
+            fontFamily: 'Raleway-Regular',
+          }}
           style={{marginTop: hp(10)}}
-          onPress={() => navigation.navigate('register')}>
-          <Text>Create an Account</Text>
+          onPress={() => navigation.navigate('register')}
+          color="black">
+          Create an Account
         </Button>
       </Container>
     </>
@@ -65,7 +72,7 @@ const styles = StyleSheet.create({
   },
   form: {
     backgroundColor: 'white',
-    height: '65%',
+    height: '55%',
     width: '85%',
     borderRadius: 3,
     alignSelf: 'center',
