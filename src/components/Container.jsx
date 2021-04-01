@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     height: '100%',
+    backgroundColor:'white'
   },
   shapeBg: {
     height: '60%',
