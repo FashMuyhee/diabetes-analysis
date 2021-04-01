@@ -2,13 +2,18 @@ import React from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
 
-const ScrollContainer = ({children, style}) => {
+const ScrollContainer = (props) => {
+  const {children, style} = props;
   const myStyle = {...styles.container, ...style};
 
-  return <ScrollView style={myStyle}>{children}</ScrollView>;
+  return (
+    <ScrollView style={myStyle} {...props}>
+      {children}
+    </ScrollView>
+  );
 };
 
-ScrollContainer.prototype = {
+ScrollContainer.propTypes = {
   children: PropTypes.element.isRequired,
   style: PropTypes.object,
 };
