@@ -41,7 +41,7 @@ const Welcome = ({theme, navigation}) => {
         <Button
           mode="contained"
           style={styles.btn}
-          onPress={() => navigation.navigate('run-test')}>
+          onPress={() => navigation.navigate('login')}>
           Get Started
         </Button>
       </ImageBackground>
