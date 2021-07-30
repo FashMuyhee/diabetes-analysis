@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "928258289622",
+    "project_id": "diabetesanalyzer",
+    "storage_bucket": "diabetesanalyzer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928258289622:android:57a3585c068cd99ca6be77",
+        "android_client_info": {
+          "package_name": "com.diabeteschecker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928258289622-2d28fdj9ael77e61vrhag5njgbspc70i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvEzg1kluSYoNfVZA5m0kn-N_3U8pJ_H8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928258289622-2d28fdj9ael77e61vrhag5njgbspc70i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
