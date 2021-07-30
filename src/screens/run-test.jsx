@@ -40,14 +40,14 @@ const RunTest = ({navigation, theme}) => {
             Fill the form to Run a Quick Test
           </Text>
           <View style={styles.form}>
-            <TextInput label="Age" style={styles.input} />
-            <TextInput label="Weight" style={styles.input} />
-            <TextInput label="Height" style={styles.input} />
-            <TextInput label="BMI" style={styles.input} />
+            <TextInput label="Number of Pregnancy(s) (If Applicable)" style={styles.input} />
+            <TextInput label="Glucose" style={styles.input} />
             <TextInput label="Blood Pressure" style={styles.input} />
-            <TextInput label="Pregnancies No (Optional)" style={styles.input} />
+            <TextInput label="Skin Thickness" style={styles.input} />
+            <TextInput label="Insulin" style={styles.input} />
+            <TextInput label="BMI" style={styles.input} />
             <TextInput label="Pedigree Function" style={styles.input} />
-            <TextInput label="Outcome" style={styles.input} />
+            <TextInput label="Age" style={styles.input} />
             <Button
               mode="contained"
               labelStyle={{

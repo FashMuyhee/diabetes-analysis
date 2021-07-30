@@ -4,12 +4,12 @@ import {
   CardStyleInterpolators,
 } from '@react-navigation/stack';
 import {Login, Welcome, Register} from '../screens';
-import {Context} from '../store/context';
+import {UserContext} from '../store/UserContext';
 import TabNavigator from './tab';
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
-  const [state] = useContext(Context);
+  const {user} = useContext(UserContext);
 
   return (
     <Stack.Navigator
@@ -18,10 +18,15 @@ const StackNavigator = () => {
       screenOptions={{
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
-      <Stack.Screen name="welcome" component={Welcome} />
-      <Stack.Screen name="login" component={Login} />
-      <Stack.Screen name="register" component={Register} />
-      <Stack.Screen name="dashboard" component={TabNavigator} />
+      {user ? (
+        <Stack.Screen name="dashboard" component={TabNavigator} />
+      ) : (
+        <>
+          <Stack.Screen name="welcome" component={Welcome} />
+          <Stack.Screen name="login" component={Login} />
+          <Stack.Screen name="register" component={Register} />
+        </>
+      )}
     </Stack.Navigator>
   );
 };

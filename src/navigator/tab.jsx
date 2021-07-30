@@ -41,7 +41,7 @@ const TabNavigator = ({theme}) => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="history"
         component={RunTest}
         options={{
@@ -49,7 +49,7 @@ const TabNavigator = ({theme}) => {
             <FeatherIcon name="book-open" color={color} size={26} />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };

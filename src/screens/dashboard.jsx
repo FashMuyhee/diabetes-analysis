@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet, StatusBar} from 'react-native';
 import {Text, withTheme, Avatar, Card, Button} from 'react-native-paper';
 import {Container, NavBar, ScrollContainer, List} from '../components';
@@ -9,8 +9,16 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import ProgressCircle from 'react-native-progress-circle';
+import {UserContext} from '../store/UserContext';
+import auth from '@react-native-firebase/auth';
 
-const Dashboard = ({theme, navigation}) => {
+const Dashboard = ({theme}) => {
+  const {user: authUser} = useContext(UserContext);
+
+  const logout = async () => {
+    await auth().signOut();
+  };
+
   return (
     <>
       <StatusBar
@@ -21,9 +29,18 @@ const Dashboard = ({theme, navigation}) => {
       <NavBar
         left={<Avatar.Image source={user} size={35} />}
         center={
-          <Text style={{color: 'white', fontSize: 20}}>Abeeb Ayinla</Text>
+          <Text style={{color: 'white', fontSize: 20}}>
+            {authUser?.displayName}
+          </Text>
         }
-        right={<FeatherIcon name="more-vertical" color="white" size={30} />}
+        right={
+          <FeatherIcon
+            name="log-out"
+            color="white"
+            size={30}
+            onPress={logout}
+          />
+        }
       />
       <Container>
         <ScrollContainer
@@ -73,12 +90,6 @@ const Dashboard = ({theme, navigation}) => {
                 indicates diabetes. A reading between 140 and 199 mg/dL (7.8
                 mmol/L and 11.0 mmol/L) indicates prediabetes.
               </Text>
-              <Button
-                mode="contained"
-                uppercase={false}
-                style={{marginTop: 20}}>
-                Last Log Entry
-              </Button>
             </View>
           </Card>
         </ScrollContainer>
@@ -101,7 +112,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
-    width: '90%',
+    width: '95%',
   },
   progressBar: {
     flexDirection: 'column',
