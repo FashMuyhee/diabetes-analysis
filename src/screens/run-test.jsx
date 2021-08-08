@@ -1,20 +1,65 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   StatusBar,
   View,
   ScrollView,
-  ImageBackground,
-  Image,
-  SafeAreaView,
+  ToastAndroid,
 } from 'react-native';
 import {Container, NavBar} from '../components';
 import {Button, Text, withTheme, TextInput} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import shapeBg from '../assets/images/container_bg.png';
+import axios from 'axios';
 
 const RunTest = ({navigation, theme}) => {
+  const [age, setAge] = useState('');
+  const [bsFast, setBsFast] = useState('');
+  const [bsPP, setBsPP] = useState('');
+  const [pRandom, setPRandom] = useState('');
+  const [pFast, setPFast] = useState('');
+  const [hb, setHB] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleAnalyze = async () => {
+    if (!age || !bsFast || !bsPP || !pRandom || !pFast || !hb) {
+      ToastAndroid.show('All field required !!', ToastAndroid.LONG);
+      return false;
+    }
+    try {
+      const raw = {
+        data: {
+          age: parseInt(age),
+          bs_fast: parseFloat(bsFast),
+          bs_pp: parseFloat(bsPP),
+          plasma_r: parseFloat(pRandom),
+          plasma_f: parseFloat(pFast),
+          hba1c: parseInt(hb),
+        },
+      };
+      setLoading(true);
+      const res = await axios('https://diabetesapiproj.herokuapp.com/analyze', {
+        method: 'post',
+        data: JSON.stringify(raw),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      useState('');
+      useState('');
+      useState('');
+      useState('');
+      useState('');
+      useState('');
+      navigation.jumpTo('home', {result: res.data});
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error.response.data);
+    }
+  };
+
   return (
     <>
       <StatusBar
@@ -40,21 +85,59 @@ const RunTest = ({navigation, theme}) => {
             Fill the form to Run a Quick Test
           </Text>
           <View style={styles.form}>
-            <TextInput label="Number of Pregnancy(s) (If Applicable)" style={styles.input} />
-            <TextInput label="Glucose" style={styles.input} />
-            <TextInput label="Blood Pressure" style={styles.input} />
-            <TextInput label="Skin Thickness" style={styles.input} />
-            <TextInput label="Insulin" style={styles.input} />
-            <TextInput label="BMI" style={styles.input} />
-            <TextInput label="Pedigree Function" style={styles.input} />
-            <TextInput label="Age" style={styles.input} />
+            <TextInput
+              label="Age"
+              style={styles.input}
+              value={age}
+              onChangeText={setAge}
+              keyboardType="number-pad"
+            />
+            <TextInput
+              label="Blood Sugar Fast (mmol/L)"
+              style={styles.input}
+              value={bsFast}
+              keyboardType="number-pad"
+              onChangeText={setBsFast}
+            />
+            <TextInput
+              label="Blood Sugar PP (mmol/L)"
+              style={styles.input}
+              value={bsPP}
+              keyboardType="number-pad"
+              onChangeText={setBsPP}
+            />
+            <TextInput
+              label="Plasma Random (mmol/L)"
+              style={styles.input}
+              value={pRandom}
+              keyboardType="number-pad"
+              onChangeText={setPRandom}
+            />
+            <TextInput
+              label="Plasma Fast (mmol/L)"
+              style={styles.input}
+              keyboardType="number-pad"
+              value={pFast}
+              onChangeText={setPFast}
+            />
+            <TextInput
+              keyboardType="number-pad"
+              label="HBA1C (Hemoglobin mmol/mol)"
+              style={styles.input}
+              value={hb}
+              onChangeText={setHB}
+            />
+
             <Button
               mode="contained"
               labelStyle={{
                 textTransform: 'capitalize',
                 fontFamily: 'Raleway-Regular',
               }}
-              style={{marginTop: 40, marginBottom: 30}}>
+              style={{marginTop: 40, marginBottom: 30}}
+              loading={loading}
+              disabled={loading}
+              onPress={handleAnalyze}>
               Analyze
             </Button>
           </View>

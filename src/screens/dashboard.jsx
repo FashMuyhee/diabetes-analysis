@@ -1,6 +1,13 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet, StatusBar} from 'react-native';
-import {Text, withTheme, Avatar, Card, Button} from 'react-native-paper';
+import {
+  Text,
+  withTheme,
+  Avatar,
+  Card,
+  Divider,
+  Title,
+} from 'react-native-paper';
 import {Container, NavBar, ScrollContainer, List} from '../components';
 import user from '../assets/images/user.png';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -12,8 +19,11 @@ import ProgressCircle from 'react-native-progress-circle';
 import {UserContext} from '../store/UserContext';
 import auth from '@react-native-firebase/auth';
 
-const Dashboard = ({theme}) => {
+const Dashboard = ({theme, route}) => {
   const {user: authUser} = useContext(UserContext);
+  console.log(route?.params?.result);
+  const analysis = route?.params?.result?.analysis;
+  const data = route?.params?.result?.data;
 
   const logout = async () => {
     await auth().signOut();
@@ -50,46 +60,48 @@ const Dashboard = ({theme}) => {
             <Text>Analysis</Text>
             <View style={styles.progressBar}>
               <ProgressCircle
-                percent={30}
+                percent={analysis?.accuracy_level ?? 0}
                 radius={70}
                 borderWidth={3}
                 color={theme.colors.primary}
                 shadowColor="#999"
                 bgColor="#fff">
-                <Text style={{fontSize: 18}}>120</Text>
+                <Text style={{fontSize: 18}}>
+                  {`${analysis?.accuracy_level ?? 0}%`}
+                </Text>
               </ProgressCircle>
               <Text
                 style={{
                   fontSize: 20,
                   fontFamily: 'Raleway-Bold',
                   fontWeight: '400',
+                  color:
+                    analysis?.predict_type === 'Normal' || undefined
+                      ? theme.colors.primary
+                      : 'red',
+                  marginVertical: 5,
                 }}>
-                Type 2
-              </Text>
-              <Text
-                style={{
-                  color: 'red',
-                }}>
-                High Risk Today
+                {analysis?.predict_type ?? ''}
               </Text>
             </View>
+            <Divider style={{marginVertical: 20}} />
             <View style={styles.resultDetail}>
-              <List label="Age" content="50" />
-              <List label="bp" content="30mmhg" />
-              <List label="weight" content="50kg" />
-              <List label="insulin" content="50ml" />
-              <List label="height (cm)" content="170" />
-              <List label="pregnancy" content="3" />
-              <List label="bmi" content="100kg/m2" />
-              <List label="pedigree" content="0.23" />
+              <List label="Age" content={data?.age ?? ''} />
+              <List label="plasma r" content={data?.plasma_r ?? ''} />
+              <List label="Bs Fast" content={data?.bs_fast ?? ''} />
+              <List label="plasma f (cm)" content={data?.bs_fast ?? ''} />
+              <List label="bs pp" content={data?.bs_pp ?? ''} />
+              <List label="hba1c" content={data?.hba1c ?? ''} />
             </View>
             <View>
-              <Text style={{textAlign: 'justify'}}>
-                A blood sugar level less than 140 mg/dL (7.8 mmol/L) is normal.
-                A reading of more than 200 mg/dL (11.1 mmol/L) after two hours
-                indicates diabetes. A reading between 140 and 199 mg/dL (7.8
-                mmol/L and 11.0 mmol/L) indicates prediabetes.
-              </Text>
+              <Title>Diagnosis Tips</Title>
+              {analysis?.tips?.advice.slice(0, 3).map((advice, key) => {
+                return (
+                  <Text style={{textAlign: 'justify'}} key={key}>
+                    {advice}
+                  </Text>
+                );
+              })}
             </View>
           </Card>
         </ScrollContainer>
