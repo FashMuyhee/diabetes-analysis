@@ -30,83 +30,58 @@ const Dashboard = ({theme, route}) => {
   };
 
   return (
-    <>
-      <StatusBar
-        barStyle="light-content"
-        translucent={false}
-        backgroundColor={theme.colors.primary}
-      />
-      <NavBar
-        left={<Avatar.Image source={user} size={35} />}
-        center={
-          <Text style={{color: 'white', fontSize: 20}}>
-            {authUser?.displayName}
+    <ScrollContainer
+      style={styles.container}
+      contentContainerStyle={{alignItems: 'center'}}>
+      <Card style={styles.resultCard}>
+        <Text>Analysis</Text>
+        <View style={styles.progressBar}>
+          <ProgressCircle
+            percent={analysis?.accuracy_level ?? 0}
+            radius={70}
+            borderWidth={3}
+            color={theme.colors.primary}
+            shadowColor="#999"
+            bgColor="#fff">
+            <Text style={{fontSize: 18}}>
+              {`${analysis?.accuracy_level ?? 0}%`}
+            </Text>
+          </ProgressCircle>
+          <Text
+            style={{
+              fontSize: 20,
+              fontFamily: 'Raleway-Bold',
+              fontWeight: '400',
+              color:
+                analysis?.predict_type === 'Normal' || undefined
+                  ? theme.colors.primary
+                  : 'red',
+              marginVertical: 5,
+            }}>
+            {analysis?.predict_type ?? ''}
           </Text>
-        }
-        right={
-          <FeatherIcon
-            name="log-out"
-            color="white"
-            size={30}
-            onPress={logout}
-          />
-        }
-      />
-      <Container>
-        <ScrollContainer
-          style={styles.container}
-          contentContainerStyle={{alignItems: 'center'}}>
-          <Card style={styles.resultCard}>
-            <Text>Analysis</Text>
-            <View style={styles.progressBar}>
-              <ProgressCircle
-                percent={analysis?.accuracy_level ?? 0}
-                radius={70}
-                borderWidth={3}
-                color={theme.colors.primary}
-                shadowColor="#999"
-                bgColor="#fff">
-                <Text style={{fontSize: 18}}>
-                  {`${analysis?.accuracy_level ?? 0}%`}
-                </Text>
-              </ProgressCircle>
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontFamily: 'Raleway-Bold',
-                  fontWeight: '400',
-                  color:
-                    analysis?.predict_type === 'Normal' || undefined
-                      ? theme.colors.primary
-                      : 'red',
-                  marginVertical: 5,
-                }}>
-                {analysis?.predict_type ?? ''}
+        </View>
+        <Divider style={{marginVertical: 20}} />
+        <View style={styles.resultDetail}>
+          <List label="Age" content={data?.age ?? ''} />
+          <List label="plasma r" content={data?.plasma_r ?? ''} />
+          <List label="Bs Fast" content={data?.bs_fast ?? ''} />
+          <List label="plasma f (cm)" content={data?.bs_fast ?? ''} />
+          <List label="bs pp" content={data?.bs_pp ?? ''} />
+          <List label="hba1c" content={data?.hba1c ?? ''} />
+        </View>
+        <View>
+          <Title>Diagnosis Tips</Title>
+          {analysis?.tips?.advice.slice(0, 3).map((advice, key) => {
+            return (
+              <Text style={{textAlign: 'justify'}} key={key}>
+                {advice}
               </Text>
-            </View>
-            <Divider style={{marginVertical: 20}} />
-            <View style={styles.resultDetail}>
-              <List label="Age" content={data?.age ?? ''} />
-              <List label="plasma r" content={data?.plasma_r ?? ''} />
-              <List label="Bs Fast" content={data?.bs_fast ?? ''} />
-              <List label="plasma f (cm)" content={data?.bs_fast ?? ''} />
-              <List label="bs pp" content={data?.bs_pp ?? ''} />
-              <List label="hba1c" content={data?.hba1c ?? ''} />
-            </View>
-            <View>
-              <Title>Diagnosis Tips</Title>
-              {analysis?.tips?.advice.slice(0, 3).map((advice, key) => {
-                return (
-                  <Text style={{textAlign: 'justify'}} key={key}>
-                    {advice}
-                  </Text>
-                );
-              })}
-            </View>
-          </Card>
-        </ScrollContainer>
-      </Container>
-    </>
+            );
+          })}
+        </View>
+      </Card>
+    </ScrollContainer>
   );
 };
 

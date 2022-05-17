@@ -41,17 +41,17 @@ const RunTest = ({navigation, theme}) => {
       setLoading(true);
       const res = await axios('https://diabetesapiproj.herokuapp.com/analyze', {
         method: 'post',
-        data: JSON.stringify(raw),
+        data: raw,
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      useState('');
-      useState('');
-      useState('');
-      useState('');
-      useState('');
-      useState('');
+      setAge('');
+      setBsPP('');
+      setBsFast('');
+      setPRandom('');
+      setHB('');
+      setPFast('');
       navigation.jumpTo('home', {result: res.data});
       setLoading(false);
     } catch (error) {
@@ -61,89 +61,74 @@ const RunTest = ({navigation, theme}) => {
   };
 
   return (
-    <>
-      <StatusBar
-        barStyle="light-content"
-        translucent={false}
-        backgroundColor={theme.colors.primary}
-      />
-      <Container>
-        <NavBar
-          bgColor="transparent"
-          left={
-            <Icon
-              name="arrow-back"
-              color="white"
-              size={30}
-              onPress={() => navigation.goBack()}
-            />
-          }
-          center={<Text style={{color: 'white', fontSize: 20}}>Run Test</Text>}
+    <ScrollView>
+      <Text style={[styles.registerTitle, {color: theme.colors['primary']}]}>
+        Fill the form to Run a Quick Test
+      </Text>
+      <View style={styles.form}>
+        <TextInput
+          label="Age"
+          style={styles.input}
+          value={age}
+          onChangeText={setAge}
+          keyboardType="number-pad"
+          mode="outlined"
         />
-        <ScrollView>
-          <Text style={styles.registerTitle}>
-            Fill the form to Run a Quick Test
-          </Text>
-          <View style={styles.form}>
-            <TextInput
-              label="Age"
-              style={styles.input}
-              value={age}
-              onChangeText={setAge}
-              keyboardType="number-pad"
-            />
-            <TextInput
-              label="Blood Sugar Fast (mmol/L)"
-              style={styles.input}
-              value={bsFast}
-              keyboardType="number-pad"
-              onChangeText={setBsFast}
-            />
-            <TextInput
-              label="Blood Sugar PP (mmol/L)"
-              style={styles.input}
-              value={bsPP}
-              keyboardType="number-pad"
-              onChangeText={setBsPP}
-            />
-            <TextInput
-              label="Plasma Random (mmol/L)"
-              style={styles.input}
-              value={pRandom}
-              keyboardType="number-pad"
-              onChangeText={setPRandom}
-            />
-            <TextInput
-              label="Plasma Fast (mmol/L)"
-              style={styles.input}
-              keyboardType="number-pad"
-              value={pFast}
-              onChangeText={setPFast}
-            />
-            <TextInput
-              keyboardType="number-pad"
-              label="HBA1C (Hemoglobin mmol/mol)"
-              style={styles.input}
-              value={hb}
-              onChangeText={setHB}
-            />
+        <TextInput
+          label="Blood Sugar Fast (mmol/L)"
+          style={styles.input}
+          value={bsFast}
+          keyboardType="number-pad"
+          onChangeText={setBsFast}
+          mode="outlined"
+        />
+        <TextInput
+          label="Blood Sugar PP (mmol/L)"
+          style={styles.input}
+          value={bsPP}
+          keyboardType="number-pad"
+          onChangeText={setBsPP}
+          mode="outlined"
+        />
+        <TextInput
+          label="Plasma Random (mmol/L)"
+          style={styles.input}
+          value={pRandom}
+          keyboardType="number-pad"
+          mode="outlined"
+          onChangeText={setPRandom}
+        />
+        <TextInput
+          mode="outlined"
+          label="Plasma Fast (mmol/L)"
+          style={styles.input}
+          keyboardType="number-pad"
+          value={pFast}
+          onChangeText={setPFast}
+        />
+        <TextInput
+          keyboardType="number-pad"
+          label="HBA1C (Hemoglobin mmol/mol)"
+          style={styles.input}
+          value={hb}
+          onChangeText={setHB}
+          mode="outlined"
+        />
 
-            <Button
-              mode="contained"
-              labelStyle={{
-                textTransform: 'capitalize',
-                fontFamily: 'Raleway-Regular',
-              }}
-              style={{marginTop: 40, marginBottom: 30}}
-              loading={loading}
-              disabled={loading}
-              onPress={handleAnalyze}>
-              Analyze
-            </Button>
-          </View>
-        </ScrollView>
-      </Container>
-    </>
+        <Button
+          mode="contained"
+          labelStyle={{
+            textTransform: 'capitalize',
+            fontFamily: 'Raleway-Regular',
+          }}
+          style={{marginTop: 40, marginBottom: 30, height: 50}}
+          loading={loading}
+          disabled={loading}
+          onPress={handleAnalyze}>
+          Analyze
+        </Button>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -161,13 +146,12 @@ const styles = StyleSheet.create({
     marginTop: hp(3),
   },
   form: {
-    backgroundColor: 'white',
     width: '95%',
     borderRadius: 3,
     alignSelf: 'center',
     marginTop: 20,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#0A1933',
+    // borderWidth: StyleSheet.hairlineWidth,
+    // borderColor: '#0A1933',
     paddingBottom: 10,
     marginBottom: 10,
     padding: 20,
@@ -175,7 +159,8 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: 'white',
     marginTop: 15,
-    marginBottom: 25,
+    height: 50,
+    // marginBottom: 25,
   },
   shapeBg: {
     height: '60%',
