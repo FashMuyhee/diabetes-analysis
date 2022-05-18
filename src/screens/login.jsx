@@ -49,69 +49,55 @@ const Login = ({navigation, theme}) => {
   };
 
   return (
-    <>
-      <StatusBar
-        barStyle="light-content"
-        translucent={false}
-        backgroundColor={theme.colors.primary}
-      />
-      <Container style={styles.container}>
-        <NavBar
-          bgColor="transparent"
-          left={
-            <Icon
-              name="arrow-back"
-              color="white"
-              size={30}
-              onPress={() => navigation.goBack()}
+    <Container style={styles.container}>
+      <Text style={[styles.loginTitle, {color: theme.colors['primary']}]}>
+        Login To Your Account
+      </Text>
+      <View style={styles.form}>
+        <TextInput
+          label="Email"
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          left={<TextInput.Icon size={20} name="email" />}
+          mode="outlined"
+        />
+        <TextInput
+          label="Password"
+          style={styles.input}
+          secureTextEntry={passwordVisible}
+          value={password}
+          onChangeText={setPassword}
+          right={
+            <TextInput.Icon
+              name={passwordVisible ? 'eye-off' : 'eye'}
+              onPress={() => setPasswordVisible(!passwordVisible)}
             />
           }
+          mode="outlined"
+          left={<TextInput.Icon size={20} name="lock" />}
         />
-        <Text style={styles.loginTitle}>Login To Your Account</Text>
-        <View style={styles.form}>
-          <TextInput
-            label="Email"
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-            left={<TextInput.Icon name="email" />}
-          />
-          <TextInput
-            label="Password"
-            style={styles.input}
-            secureTextEntry={passwordVisible}
-            value={password}
-            onChangeText={setPassword}
-            right={
-              <TextInput.Icon
-                name={passwordVisible ? 'eye-off' : 'eye'}
-                onPress={() => setPasswordVisible(!passwordVisible)}
-              />
-            }
-            left={<TextInput.Icon name="lock" />}
-          />
-          <Button
-            mode="contained"
-            onPress={handleSignIn}
-            labelStyle={{textTransform: 'capitalize'}}
-            style={{marginTop: 40, marginBottom: 30}}
-            loading={loading}
-            disabled={loading}>
-            Sign In
-          </Button>
-        </View>
         <Button
+          mode="contained"
+          onPress={handleSignIn}
           labelStyle={{
             textTransform: 'capitalize',
-            fontFamily: 'Raleway-Regular',
+            alignContent: 'center',
+            alignSelf: 'center',
           }}
-          style={{marginTop: hp(10)}}
-          onPress={() => navigation.navigate('register')}
-          color="black">
-          Create an Account
+          style={{marginTop: 50}}
+          contentStyle={{height: 50}}
+          loading={loading}
+          disabled={loading}>
+          Sign In
         </Button>
-      </Container>
-    </>
+      </View>
+      <Text
+        style={{marginTop: hp(10), textAlign: 'center'}}
+        onPress={() => navigation.navigate('register')}>
+        Create an Account
+      </Text>
+    </Container>
   );
 };
 
@@ -143,6 +129,6 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: 'white',
     marginTop: 15,
-    marginBottom: 25,
+    height: 50,
   },
 });

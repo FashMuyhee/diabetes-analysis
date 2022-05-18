@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, StatusBar, View} from 'react-native';
 import {Container, NavBar} from '../components';
-import {Button, Text, TextInput} from 'react-native-paper';
+import {Button, Text, TextInput, useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import validateEmail from '../helper/validateEmail';
@@ -13,7 +13,7 @@ const Register = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [loading, setLoading] = useState(false);
-
+  const theme = useTheme();
   const handleSignUp = async () => {
     if (!email || !password || !fullname) {
       // Snackbar.show({text: 'All Field are required'});
@@ -60,66 +60,62 @@ const Register = ({navigation}) => {
     }
   };
   return (
-    <>
-      <StatusBar barStyle="light-content" />
-      <Container style={styles.container}>
-        <NavBar
-          bgColor="transparent"
-          left={
-            <Icon
-              name="arrow-back"
-              color="white"
-              size={30}
-              onPress={() => navigation.goBack()}
+    <Container style={styles.container}>
+      <Text style={[styles.registerTitle, {color: theme.colors['primary']}]}>
+        Create Account
+      </Text>
+      <View style={styles.form}>
+        <TextInput
+          label="Fullname"
+          style={styles.input}
+          onChangeText={setFullname}
+          value={fullname}
+          mode="outlined"
+        />
+        <TextInput
+          label="Email"
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          mode="outlined"
+        />
+        <TextInput
+          label="Password"
+          style={styles.input}
+          mode="outlined"
+          secureTextEntry={passwordVisible}
+          onChangeText={setPassword}
+          value={password}
+          right={
+            <TextInput.Icon
+              name={passwordVisible ? 'eye-off' : 'eye'}
+              onPress={() => setPasswordVisible(!passwordVisible)}
             />
           }
         />
-        <Text style={styles.registerTitle}>Create Account</Text>
-        <View style={styles.form}>
-          <TextInput
-            label="Fullname"
-            style={styles.input}
-            onChangeText={setFullname}
-            value={fullname}
-          />
-          <TextInput
-            label="Email"
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-          />
-          <TextInput
-            label="Password"
-            style={styles.input}
-            secureTextEntry={passwordVisible}
-            onChangeText={setPassword}
-            value={password}
-            right={
-              <TextInput.Icon
-                name={passwordVisible ? 'eye-off' : 'eye'}
-                onPress={() => setPasswordVisible(!passwordVisible)}
-              />
-            }
-          />
 
-          <Button
-            mode="contained"
-            labelStyle={{textTransform: 'capitalize'}}
-            style={{marginTop: 40, marginBottom: 30}}
-            onPress={handleSignUp}
-            loading={loading}
-            disabled={loading}>
-            Sign Up
-          </Button>
-        </View>
         <Button
-          onPress={() => navigation.navigate('login')}
-          labelStyle={{textTransform: 'capitalize'}}
-          style={{marginTop: hp(5)}}>
-          <Text>Already created an account? Login</Text>
+          mode="contained"
+          labelStyle={{
+            textTransform: 'capitalize',
+            alignContent: 'center',
+            alignSelf: 'center',
+          }}
+          style={{marginTop: 50}}
+          contentStyle={{height: 50}}
+          onPress={handleSignUp}
+          loading={loading}
+          disabled={loading}>
+          Sign Up
         </Button>
-      </Container>
-    </>
+      </View>
+      <Button
+        onPress={() => navigation.navigate('login')}
+        labelStyle={{textTransform: 'capitalize'}}
+        style={{marginTop: hp(5)}}>
+        <Text>Already created an account? Login</Text>
+      </Button>
+    </Container>
   );
 };
 
@@ -138,19 +134,17 @@ const styles = StyleSheet.create({
   },
   form: {
     backgroundColor: 'white',
-    height: '68%',
+    height: hp(60),
     width: '85%',
     borderRadius: 3,
     alignSelf: 'center',
     marginTop: 20,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#0A1933',
     marginBottom: 20,
-    padding: 30,
+    padding: 10,
   },
   input: {
     backgroundColor: 'white',
     marginTop: 15,
-    marginBottom: 25,
+    height: 50,
   },
 });

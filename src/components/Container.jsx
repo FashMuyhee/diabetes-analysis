@@ -11,7 +11,6 @@ const Container = ({children, style}) => {
       {/*  <ImageBackground style={styles.shapeBg} source={bg}>
         {children}
       </ImageBackground> */}
-      <Image style={styles.shapeBg} source={bg} />
       <View style={styles.content}>{children}</View>
     </View>
   );
@@ -28,7 +27,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     height: '100%',
-    backgroundColor:'white'
+    backgroundColor: 'white',
   },
   shapeBg: {
     height: '60%',

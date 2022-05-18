@@ -46,13 +46,14 @@ const RunTest = ({navigation, theme}) => {
           'Content-Type': 'application/json',
         },
       });
+      console.log(res)
       setAge('');
       setBsPP('');
       setBsFast('');
       setPRandom('');
       setHB('');
       setPFast('');
-      navigation.jumpTo('home', {result: res.data});
+      navigation.navigate('dashboard', {result: res.data});
       setLoading(false);
     } catch (error) {
       setLoading(false);
